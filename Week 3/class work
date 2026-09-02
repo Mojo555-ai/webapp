@@ -1,0 +1,78 @@
+body{
+   background-color: lightblue;
+}
+
+/* What if you want multiple elements the same way?
+Our solution are Classes and IDs
+
+Classes are used for multiple elsements
+IDs are used for once.
+
+Classes start with a .classname name can be anything after .xxxxxxxx */
+
+.highlight{
+    color: red
+}
+
+/* ID starts with a # like #ID name */
+#main-header{
+    text-align:center;
+    font-size: 32px;
+}
+
+/* 
+everything in CSS is a box, each box has layers:
+
+1 Content: text, image, whatever is inside
+
+2 padding: space between content and teh border 
+
+3 border: th line are the elemenbt
+
+4 MArgin space between this element and other elemenmts
+
+|<---Margin---->| [border [ padding [ content ] padding ] border] |<---Margin---->|
+
+use margin to seperate elements apart and padding to give breathing room inside the element
+*/
+p{  
+    margin: 40px; /*space outside*/
+    padding: 10px; /*space inside*/
+    border: 2px dashed red; /*visable outsline*/
+
+}
+
+/* a single margin will control all of them, commas will seperate each */
+
+/* links can change style depending on theur state: after */
+
+/* 
+a:link>>default unvisited link 
+
+a:visited>> link the user has already clicked
+
+a:hover>> when the mouse hovers over it
+
+a:active>> when the link is being clicked
+*/
+
+a:link{
+    color: pink;
+
+}
+
+a:visited{
+    color: red;
+
+}
+
+a:hover{
+    color:aqua;
+    text-decoration: wavy;
+    text-shadow: 10px;
+    font-size: xx-large;
+}
+
+a:active{
+    color: orange
+}

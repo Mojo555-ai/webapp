@@ -1,0 +1,117 @@
+
+
+html {
+            font-size: 16px;
+        }
+    
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
+            background-color: #7092c5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        main {
+            margin-top: 40px; /* to create space between the header and the main content, i dont understand why I can not add this to .main-content and need to do it seperatly, took forever to figure out. reddit helped */
+        }
+
+        .main-content {
+            max-width: auto; /* to control the width of the content and make the box fit across the page */
+            border: 4px solid #333333; /* to create a border around the box */
+            border-radius: 10px; /* to round the corners of the box */
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #949393;
+        }
+
+        section {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h3 {
+            text-align: right;
+            color: #333;
+        }
+
+        h4 {
+            text-align: right;
+            color: #333;
+        }
+
+        h5 {
+            margin-bottom: 5px;
+        }
+S
+        p {
+            color: #181717; /* to set the text color of paragraphs */
+        }
+
+        img {
+            display: block; /* to center image */
+            border-radius: 50px; /* to round image */
+            margin: 0 auto;
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #0f0f0f;
+        }
+        
+        a:link{
+            color: rgb(190, 32, 59);
+
+        }
+
+        a:visited{
+            color: rgb(44, 72, 150);
+        } 
+
+        a:hover{
+            color:rgb(18, 221, 62); /* changes the color of links when hovered over */
+            text-decoration: wavy underline; /*wavy underlinehovered over */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: larger;
+        }
+
+        nav {
+            /* background-color: #837f7f; this creates a dark background, didnt like it */
+            padding: 2px;
+            text-align: justify;
+        }
+
+        #site-footer {
+            margin-top: auto;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+            position: fixed;
+            bottom: 0;  
+            width: 100%;
+            
+        }
+
+        .link.box {
+            /*designs my links to connected pages to look like boxes across all pages*/
+            display: inline-block;
+            /* padding: 1px; /*Made the links to other pages overlap boxes */
+            margin-bottom: 5px; /* space between boxes */
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .link.box.favorite-box { /*allows me to design my favorites page box paragrapghs to look different than the other link boxes that I have to direct you to connected pages*/
+            padding: 5px;
+            margin-bottom: 20px; /* space between boxes */
+            background-color: #999292;
+            border: 2px solid #333333;
+        }
+
+        th, td {
+        padding: 10px;
+        }

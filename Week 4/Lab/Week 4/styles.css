@@ -1,0 +1,74 @@
+/* controls the color and overall look of the webpage */
+body{
+    background-color: bisque;
+}
+
+header{
+    text-align: center;
+}
+
+nav{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* creating box elements */
+.box {
+    text-align: center;
+    font-size: medium;
+    padding: 20px;
+    width: 150px;
+    height: 150px;
+}
+
+.cards{
+    display: flex; 
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Individual box deign */
+#box1{
+    background-color: cadetblue;
+}
+
+#box2{
+    background-color: lightcoral;
+}
+
+#box3{
+    background-color: mediumaquamarine;
+}
+
+/* Links will appear blue */
+a:link{
+    color: rgb(23, 141, 209);
+
+}
+
+/* changes the color of the link from red to blue once visited */
+a:visited{
+    color: rgb(179, 20, 131);
+} 
+
+a:hover{
+    color:rgb(18, 221, 62); /* changes the color of links to green when hovered over */
+    text-decoration: wavy underline; /*wavy underlinehovered over */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: larger;
+}
+
+/* fix footer to bottome */
+footer {
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    bottom: 0;
+}
+
+

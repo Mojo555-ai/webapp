@@ -1,1 +1,56 @@
+<!DOCTYPE html >
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>webpage</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Why flexbox?
+     Normally html elements stack vertically
+     flexbox -->
+    <nav>
+        <a href="#">home</a>
+        <a href="#">about</a>
+        <a href="#">contact</a>
+        <!-- flex containers vs flex items -->
+    </nav>
+         <section class="cards">
+            <div> gam 1</div>
+            <div>game 2</div>
+            <div>game 3</div>
+         </section>
+
+         <!-- flexs containers is the sections 
+          Divs are the items -->
+    
+</body>
+</html>
+
+body{
+    background-color: bisque;
+}
+
+nav{
+    display: flex;
+    gap:20px
+    /* rather then adding margins to every items gap creates consistent soacing between flex items */
+}
+
+.cards{
+    display: flex;
+    
+    justify-content: space-between ;
+    /* align-items: center; */
+    flex-wrap: wrap;
+}
+p{
+    color: red;
+}
+
+.red{
+    color: yellow;
+}

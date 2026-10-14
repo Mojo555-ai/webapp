@@ -1,0 +1,14 @@
+
+
+
+body {
+  background-color:aliceblue; 
+  font-family: Georgia, 'Times New Roman', Times, serif, sans-serif;
+}
+
+footer {
+  position: fixed;
+  text-align: center;
+  bottom: 0;
+  width: 100%;
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html >
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAVA intro classwork</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <script href="scripts.js"></script> for homework-->
+     <script>
+        //these are comments ain javascript
+        //if we want output we will use console.log()
+        console.log("this is going to appear on my console");
+        //2 types of variables in JS let & constant
+        //let = reassignable
+        //constant = perminent
+        let name ="joseph"; //string text
+        let age =30; //number/integer
+        const isInstructore=true; //boolean
+        console.log(name, age, isInstructore)
+        console.log(5+9);
+
+        let first ="hello";
+        let second="world";
+        console.log(first + " "+ second);
+
+
+
+
+
+     </script>
+</head>
+
+<body>
+
+
+</body>
+</html>

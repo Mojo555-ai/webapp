@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master SE Asia Trip Budget</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+    .container { max-width: 940px; margin: 0 auto; background: #1e293b; border-radius: 14px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.6); }
+    h1 { margin: 0 0 4px 0; font-size: 1.5rem; color: #38bdf8; }
+    .subtitle { font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px; }
+    .summary-card { display: flex; justify-content: space-between; align-items: center; background: #0f172a; padding: 18px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #334155; }
+    .stat-label { font-size: 0.8rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-val { font-size: 1.4rem; font-weight: 700; margin-top: 4px; }
+    .surplus { color: #4ade80; }
+    .deficit { color: #f87171; }
+    .progress-bar-bg { width: 140px; height: 8px; background: #334155; border-radius: 4px; overflow: hidden; margin-top: 6px; }
+    .progress-bar-fill { height: 100%; background: #38bdf8; width: 0%; transition: width 0.15s ease; }
+    .button-group { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    button { background: #334155; color: #f8fafc; border: 1px solid #475569; padding: 9px 14px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease; }
+    button:hover { background: #475569; }
+    button.primary { background: #0284c7; border-color: #0369a1; }
+    button.primary:hover { background: #0369a1; }
+    .section-title { font-size: 1.05rem; font-weight: 600; border-bottom: 1px solid #334155; padding-bottom: 6px; margin: 22px 0 14px; color: #e2e8f0; display: flex; justify-content: space-between; }
+    .section-total { color: #38bdf8; font-size: 0.95rem; }
+    
+    /* Row and Slider Styling - Single line text layout */
+    .row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 4px 0; transition: all 0.2s ease; white-space: nowrap; }
+    .row input[type="checkbox"] { margin-right: 12px; width: 18px; height: 18px; cursor: pointer; accent-color: #16a34a; flex-shrink: 0; }
+    .row label { flex: 2.8; font-size: 0.92rem; transition: color 0.2s; overflow: hidden; text-overflow: ellipsis; }
+    .row input[type="range"] { flex: 3; margin: 0 14px; accent-color: #38bdf8; cursor: pointer; transition: opacity 0.2s; }
+    .row .val-display { flex: 0.8; text-align: right; font-weight: 700; color: #38bdf8; font-variant-numeric: tabular-nums; transition: color 0.2s; }
+    
+    /* Locked/Purchased State Styles */
+    .row.locked label { color: #4ade80; font-weight: 600; }
+    .row.locked .val-display { color: #4ade80; }
+    .row.locked input[type="range"] { opacity: 0.3; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Master Budget Tracker</h1>
+  <div class="subtitle">Vietnam 3-Night Stays → Bohol → El Nido → Coron (4 Nights Da Nang)</div>
+
+  <div class="summary-card">
+    <div>
+      <div class="stat-label">Target Budget</div>
+      <div class="stat-val" id="disp-total-budget">$4,000</div>
+    </div>
+    <div>
+      <div class="stat-label">Total Expenses</div>
+      <div class="stat-val" id="disp-total-expenses">$0</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+    </div>
+    <div>
+      <div class="stat-label">Remaining Buffer</div>
+      <div class="stat-val surplus" id="disp-remaining">$0</div>
+    </div>
+  </div>
+
+  <div class="row" style="background: #0f172a; padding: 12px 16px; border-radius: 8px; border: 1px solid #334155; margin-bottom: 16px;">
+    <label><strong>Target Trip Budget</strong></label>
+    <input type="range" id="slider-target" min="2000" max="6000" step="50" value="4000">
+    <div class="val-display" id="val-target">$4,000</div>
+  </div>
+
+  <div class="button-group">
+    <button class="primary" id="btn-save" onclick="saveToLocalDrive()">💾 Save Directly to PC</button>
+    <button id="btn-load" onclick="loadFromLocalDrive()">📂 Load Specific File</button>
+    <button onclick="resetDefaults()">🔄 Reset</button>
+  </div>
+
+  <div class="section-title">
+    <span>✈️ Regional Transit (Flights & Transfers)</span>
+    <span class="section-total" id="flights-total">$0</span>
+  </div>
+  <div id="flight-sliders"></div>
+
+  <div class="section-title">
+    <span>🏨 Regional Stays</span>
+    <span class="section-total" id="hotels-total">$0</span>
+  </div>
+  <div id="hotel-sliders"></div>
+</div>
+
+<script>
+var transit = [
+  { id: "ceb_sgn", name: "CEB→SGN (May 19th Flight)", min: 80, max: 250, defaultVal: 100 },
+  { id: "sgn_dad", name: "SGN→DAD (May 23rd Flight)", min: 30, max: 150, defaultVal: 50 },
+  { id: "dad_tag", name: "DAD→TAG via MNL (June 3rd Flight)", min: 130, max: 350, defaultVal: 160 },
+  { id: "tag_eni", name: "Bohol→El Nido (June 8th Flight)", min: 90, max: 220, defaultVal: 120 },
+  { id: "eni_coron", name: "El Nido→Coron (June 11th Flight)", min: 60, max: 150, defaultVal: 110 },
+  { id: "usu_ceb", name: "Coron→CEB (June 15th Flight)", min: 40, max: 150, defaultVal: 75 }
+];
+
+var hotels = [
+  { id: "ceb_arrival", name: "Cebu City / Mactan (5/17-5/19 | 2 nts)", min: 60, max: 200, defaultVal: 100 },
+  { id: "hcmc", name: "HCMC District 1 / 3 (5/19-5/23 | 4 nts)", min: 180, max: 500, defaultVal: 260 },
+  { id: "hoian", name: "Hoi An Ancient Town (5/23-5/26 | 3 nts)", min: 90, max: 300, defaultVal: 165 },
+  { id: "phongnha", name: "Phong Nha Jungle Eco-Lodge (5/26-5/29 | 3 nts)", min: 90, max: 300, defaultVal: 165 },
+  { id: "danang", name: "Da Nang Beach & Monkey Mtn (5/29-6/2 | 4 nts)", min: 110, max: 380, defaultVal: 220 },
+  { id: "bohol_gap", name: "Panglao, Bohol Eco-Resort (6/2-6/7 | 5 nts)", min: 250, max: 800, defaultVal: 450 },
+  { id: "elnido_town", name: "RockinNest El Nido Town (6/7-6/10 | 2 nts)", min: 80, max: 300, defaultVal: 160 },
+  { id: "elnido_beach", name: "Maremegmeg Beach (6/10-6/11 | 1 nt)", min: 50, max: 350, defaultVal: 120 },
+  { id: "coron", name: "Coron Town Proper (6/11-6/15 | 4 nts)", min: 150, max: 400, defaultVal: 260 },
+  { id: "mactan_final", name: "Mactan Final Layover (6/15-6/16 | 1 nt)", min: 40, max: 180, defaultVal: 75 }
+];
+
+let currentFileHandle = null;
+
+function safeGetStorage() {
+  try {
+    var raw = localStorage.getItem("master_seasia_budget_v6");
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) { return null; }
+}
+
+function safeSetStorage(data) {
+  try {
+    localStorage.setItem("master_seasia_budget_v6", JSON.stringify(data));
+  } catch (e) {}
+}
+
+function getCurrentState() {
+  var state = {
+    target: parseFloat(document.getElementById("slider-target").value),
+    items: {},
+    locked: {}
+  };
+  transit.concat(hotels).forEach(function(item) {
+    var el = document.getElementById(item.id);
+    var cb = document.getElementById("check-" + item.id);
+    if (el) state.items[item.id] = parseFloat(el.value);
+    if (cb) state.locked[item.id] = cb.checked;
+  });
+  return state;
+}
+
+function applyState(state) {
+  if (!state) return;
+  if (state.target) {
+    document.getElementById("slider-target").value = state.target;
+  }
+  if (state.items) {
+    for (var key in state.items) {
+      var el = document.getElementById(key);
+      if (el && state.items[key] !== undefined) el.value = state.items[key];
+    }
+  }
+  if (state.locked) {
+    for (var key in state.locked) {
+      var cb = document.getElementById("check-" + key);
+      if (cb && state.locked[key] !== undefined) {
+        cb.checked = state.locked[key];
+        toggleLock(key, cb.checked);
+      }
+    }
+  }
+  recalculate();
+}
+
+function showButtonSuccess(btnId, text) {
+  var btn = document.getElementById(btnId);
+  var originalText = btn.innerHTML;
+  var originalBg = btn.style.backgroundColor;
+  var originalBorder = btn.style.borderColor;
+
+  btn.innerHTML = text;
+  btn.style.backgroundColor = "#16a34a";
+  btn.style.borderColor = "#15803d";
+  
+  setTimeout(function() {
+    btn.innerHTML = originalText;
+    btn.style.backgroundColor = originalBg;
+    btn.style.borderColor = originalBorder;
+  }, 2000);
+}
+
+function toggleLock(id, isLocked) {
+  var row = document.getElementById("row-" + id);
+  var slider = document.getElementById(id);
+  if (isLocked) {
+    row.classList.add("locked");
+    slider.disabled = true;
+  } else {
+    row.classList.remove("locked");
+    slider.disabled = false;
+  }
+}
+
+function createSliders(items, containerId) {
+  var container = document.getElementById(containerId);
+  container.innerHTML = '';
+  
+  items.forEach(function(item) {
+    var row = document.createElement("div");
+    row.className = "row";
+    row.id = "row-" + item.id;
+    
+    row.innerHTML = 
+      '<input type="checkbox" id="check-' + item.id + '" title="Mark as Purchased/Locked">' +
+      '<label for="check-' + item.id + '">' + item.name + '</label>' +
+      '<input type="range" id="' + item.id + '" min="' + item.min + '" max="' + item.max + '" step="1" value="' + item.defaultVal + '">' +
+      '<div class="val-display" id="val-' + item.id + '">$' + item.defaultVal + '</div>';
+    
+    container.appendChild(row);
+
+    var slider = document.getElementById(item.id);
+    var checkbox = document.getElementById("check-" + item.id);
+
+    slider.addEventListener("input", function() {
+      recalculate();
+      safeSetStorage(getCurrentState());
+    });
+
+    checkbox.addEventListener("change", function() {
+      toggleLock(item.id, checkbox.checked);
+      safeSetStorage(getCurrentState());
+    });
+  });
+}
+
+function recalculate() {
+  var target = parseFloat(document.getElementById("slider-target").value);
+  document.getElementById("val-target").innerText = "$" + target.toLocaleString();
+  document.getElementById("disp-total-budget").innerText = "$" + target.toLocaleString();
+
+  var transitSum = 0;
+  transit.forEach(function(item) {
+    var el = document.getElementById(item.id);
+    var v = el ? parseFloat(el.value) : item.defaultVal;
+    document.getElementById("val-" + item.id).innerText = "$" + v.toLocaleString();
+    transitSum += v;
+  });
+  document.getElementById("flights-total").innerText = "$" + transitSum.toLocaleString();
+
+  var hotelsSum = 0;
+  hotels.forEach(function(item) {
+    var el = document.getElementById(item.id);
+    var v = el ? parseFloat(el.value) : item.defaultVal;
+    document.getElementById("val-" + item.id).innerText = "$" + v.toLocaleString();
+    hotelsSum += v;
+  });
+  document.getElementById("hotels-total").innerText = "$" + hotelsSum.toLocaleString();
+
+  var totalExpenses = transitSum + hotelsSum;
+  var remaining = target - totalExpenses;
+
+  document.getElementById("disp-total-expenses").innerText = "$" + totalExpenses.toLocaleString();
+  var remEl = document.getElementById("disp-remaining");
+  remEl.innerText = "$" + remaining.toLocaleString();
+  remEl.className = "stat-val " + (remaining >= 0 ? "surplus" : "deficit");
+
+  var pct = Math.min(100, Math.max(0, (totalExpenses / target) * 100));
+  var fill = document.getElementById("progress-fill");
+  fill.style.width = pct + "%";
+  fill.style.background = remaining >= 0 ? "#38bdf8" : "#f87171";
+}
+
+async function saveToLocalDrive() {
+  try {
+    if (!currentFileHandle) {
+      currentFileHandle = await window.showSaveFilePicker({
+        suggestedName: 'master_trip_budget.json',
+        types: [{ description: 'JSON File', accept: { 'application/json': ['.json'] } }],
+      });
+    }
+    const writable = await currentFileHandle.createWritable();
+    await writable.write(JSON.stringify(getCurrentState(), null, 2));
+    await writable.close();
+    
+    showButtonSuccess("btn-save", "✅ SAVED!"); 
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      alert("Browser security blocked the save. Please ensure you are using Chrome or Edge.");
+    }
+  }
+}
+
+async function loadFromLocalDrive() {
+  try {
+    const [fileHandle] = await window.showOpenFilePicker({
+      types: [{ description: 'JSON File', accept: { 'application/json': ['.json'] } }],
+    });
+    currentFileHandle = fileHandle; 
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    const state = JSON.parse(contents);
+    applyState(state);
+    safeSetStorage(state);
+    
+    showButtonSuccess("btn-load", "✅ LOADED!"); 
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      alert("Could not load the file. Make sure it is your saved JSON file.");
+    }
+  }
+}
+
+function resetDefaults() {
+  try { localStorage.removeItem("master_seasia_budget_v6"); } catch(e) {}
+  document.getElementById("slider-target").value = 4000;
+  
+  transit.concat(hotels).forEach(function(item) { 
+    var slider = document.getElementById(item.id);
+    var checkbox = document.getElementById("check-" + item.id);
+    if (slider) slider.value = item.defaultVal;
+    if (checkbox) {
+      checkbox.checked = false;
+      toggleLock(item.id, false);
+    }
+  });
+  
+  currentFileHandle = null; 
+  recalculate();
+}
+
+createSliders(transit, "flight-sliders");
+createSliders(hotels, "hotel-sliders");
+document.getElementById("slider-target").addEventListener("input", function() {
+  recalculate();
+  safeSetStorage(getCurrentState());
+});
+
+var saved = safeGetStorage();
+if (saved) applyState(saved);
+else recalculate();
+</script>
+</body>
+</html>

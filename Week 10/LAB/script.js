@@ -1,7 +1,8 @@
+// A) Select and Modify Text
 const title = document.getElementById("title");
 title.textContent = "Hello from JavaScript!";
 
-// B) Change Styles with JavaScript
+// Change Styles with JavaScript
 title.style.color = "blue";
 title.style.fontFamily = "Arial, sans-serif";
 

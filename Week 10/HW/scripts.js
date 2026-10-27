@@ -36,3 +36,18 @@ const toggleBtn = document.getElementById("toggle_highlight_btn");
 toggleBtn.addEventListener("click", () => {
     mainEl.classList.toggle("cortana_glow");
 });
+
+
+const items = [
+  { name: "Halo", info: "Halo doesn't kill Flood, it kills their food. Humans, Covenant, whatever! We are all equally edible" },
+  { name: "343 Guilty Spark", info: "My function is to prevent it from leaving this Installation. But I require your assistance. Come. This way." },
+  { name: "The Maw", info: "“Destroy Halo before Halo destroys all life in the galaxy.”" }
+];
+
+const missionListEl = document.getElementById("mission");
+
+items.forEach(item => {
+  const li = document.createElement("li");
+  li.innerHTML = `<strong>${item.name}</strong>: ${item.info}`;
+  missionListEl.appendChild(li);
+});

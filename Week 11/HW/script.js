@@ -11,8 +11,9 @@ themeButton.addEventListener("click", () => {
   console.log("Theme changed!");
 });
 
-const addBtn = document.getElementById("addItem");
-const list = document.getElementById("items");
+// CHANGED FROM ITEMS TO TASKS
+const addBtn = document.getElementById("addTask");
+const list = document.getElementById("Tasks");
 let counter = 1; // keeps track of item numbers
 
 addBtn.addEventListener("click", () => {
@@ -39,9 +40,18 @@ list.addEventListener("click", (event) => {
   }
 });
 
+// •	Add a console message when you remove an item (use console.log).
+// this was a lot like the step given above. I had to pay attention to LI to get it to finction properly
+list.addEventListener("click", (event) => {
+  if(event.target.tagName === "LI") {
+    event.target.remove();
+    console.log("A task was removed!")
+  }
+});
+
 // Keyboard Input Event
 // Now you’ll make the text update whenever you press a key.
-// this was freaking hard  
+// this was freaking hard AND I had to look up the answer. I was trying to use keydown and it was not working. I also had to add a <p> tag in the html with an id of keyOutput. I STILL DONT KNOW IF IT IS WORKING LIKE YOU WANT IT TO, BUT IT IS FUNCTIONING THE WAY THAT I HAVE IT
 const keyOutput = document.getElementById("keyOutput");
 
 document.addEventListener("keyup", (event) => {

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Music Collection</h1>
+    <p>Welcome to your music collection!</p>
+
+    <h2>Add albums</h2>
+    <p>Use the form below to add albums to your collection.</p>
+
+    <label for="Artist">Artist:</label>
+
+    <form id="albumForm">
+        <select id="Artist" required>
+            <option value="">Select an artist</option>
+            <option value="The Beatles">The Beatles</option>
+            <option value="Led Zeppelin">Led Zeppelin</option>
+            <option value="Misfits">Misfits</option>
+            <option value="Social Distortion">Social Distortion</option>
+            <option value="Sam Cooke">Sam Cooke</option>
+            <option value="Johnny Cash">Johnny Cash</option>
+        </select>
+        <br>
+
+        <label for="Album">Album:</label>
+        <input type="text" id="Album" name="Album" required>
+        <br>
+
+        <button type="submit">Add Album</button>
+        
+</body>
+</html>

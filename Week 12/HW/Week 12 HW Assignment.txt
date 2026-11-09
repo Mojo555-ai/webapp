@@ -1,0 +1,26 @@
+Requirements
+Create a unique theme for your form (examples: Job Application, Event Sign-Up, Feedback Form, Pizza Order Form, etc.).
+
+Include at least 5 input fields, such as:
+
+text or email
+
+number or date
+
+textarea
+
+checkbox or radio
+
+select (drop-down)
+
+When the form is submitted:
+
+Use preventDefault() to avoid page reload.
+
+Collect the values and display them inside a <section> or <div>.
+
+Each value must be clearly labeled (e.g., “Name: Sebastian”).
+
+Include simple CSS styling and one hover effect (button, input, etc.).
+
+Add at least 3 comments in your JavaScript explaining what the code is doing.

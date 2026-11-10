@@ -28,3 +28,9 @@ form.addEventListener("submit", function (event) {
 
   form.reset();
   });
+
+//   reminders
+// case sensitivity matters
+// keep names 
+// pay attention where closing brakets should go )};
+// results are just staying on the page at this PointerEvent, figure out how to get them to appear in the list below the form

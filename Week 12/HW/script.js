@@ -8,14 +8,14 @@ document.getElementById("releaseyear").max = new Date().getFullYear();
 // do not reload the page when the form is submitted
 form.addEventListener("submit", function (event) {
   event.preventDefault();
-});
+
 
 // how to collect from all all the different fields
-  const albumName = document.getElementById("Artist").value;
+  const artist = document.getElementById("Artist").value;
   const album = document.getElementById("Album").value;
-  const releaseyear = document.getElementById("ReleaseYear").value;
-  const notes = document.getElementById("Notes").value.trim();
-  const owned = document.getElementById("Owned").checked;
+  const releaseyear = document.getElementById("releaseyear").value;
+  const notes = document.getElementById("notes").value.trim();
+  const owned = document.getElementById("owned").checked;
 
   const item = document.createElement("li");
 
@@ -26,4 +26,5 @@ form.addEventListener("submit", function (event) {
 
   albuamList.appendChild(item);
 
-  form.requestFullscreen();
+  form.reset();
+  });

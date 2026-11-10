@@ -1,38 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Music Collection</h1>
-    <p>Welcome to your music collection!</p>
+  <h1>Music Collection</h1>
+  <p>Welcome to your music collection!</p>
 
-    <h2>Add albums</h2>
-    <p>Use the form below to add albums to your collection.</p>
+  <h2>Add albums</h2>
+  <p>Use the form below to add albums to your collection.</p>
 
-    <label for="Artist">Artist:</label>
+<label for="Artist">Artist:</label>
 
-    <form id="albumForm">
-        <select id="Artist" required>
-            <option value="">Select an artist</option>
-            <option value="The Beatles">The Beatles</option>
-            <option value="Led Zeppelin">Led Zeppelin</option>
-            <option value="Misfits">Misfits</option>
-            <option value="Social Distortion">Social Distortion</option>
-            <option value="Sam Cooke">Sam Cooke</option>
-            <option value="Johnny Cash">Johnny Cash</option>
-        </select>
-        <br>
+<form id="albumForm">
+  <select id="Artist" required>
+    <option value="">Select an artist</option>
+    <option value="The Beatles">The Beatles</option>
+    <option value="Led Zeppelin">Led Zeppelin</option>
+    <option value="Misfits">Misfits</option>
+    <option value="Social Distortion">Social Distortion</option>
+    <option value="Sam Cooke">Sam Cooke</option>
+    <option value="Johnny Cash">Johnny Cash</option>
+  </select>
+  <br>
 
-        <label for="Album">Album:</label>
-        <input type="text" id="Album" name="Album" required>
-        <br>
+  <label for="Album">Album:</label>
+  <input type="text" id="Album" name="Album" required>
+  <br>
 
-        <button type="submit">Add Album</button>
-        
+<!-- <button type="submit">Add Album</button> -->
+
+  <label for="releaseyear">Release Year:</label>
+  <input type="number" id="releaseyear" name="releaseyear" min="1900" value="1900" required>
+
+  <br>
+
+  <label for="notes">Album Notes:</label>
+  <textarea id="notes" name="notes" placeholder="Notes about Album"></textarea>
+
+  <br>
+
+  <label for="owned">Owned:</label>
+  <input type="checkbox" id="owned" name="owned"> 
+  <br>
+
+  <button type="submit">Add Album</button>
+</form>
+
+<section id="results">
+  <h2>Album Collection</h2>
+  <ul id="albumList"></ul>    
+</section>
+
+
 </body>
 </html>
